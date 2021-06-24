@@ -9,6 +9,10 @@ import morgan from "morgan";
 // import userRouter from '@userRouter';
 // import userRouter = require('@userRouter')
 import { userRouter, tripRouter } from "@router";
+// import userRouter = require("../router/user");
+
+// const userRouter = express.Router();
+// const tripRouter = express.Router();
 
 const port = 4000;
 

@@ -1,1 +1,9 @@
-와 메모장이 비었어!
+
+// nodemon 실행 명령어
+npx nodemon src/index.ts
+
+"scripts": {    
+    "dev" : "nodemon --exec ts-node -r tsconfig-paths/register src/index.ts",    
+    "start" : "ts-node -r tsconfig-paths/register src/index.ts"  
+    },
+

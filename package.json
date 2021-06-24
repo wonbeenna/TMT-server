@@ -1,6 +1,8 @@
 {
   "scripts": {
+
     "start" : "nodemon --exec ts-node -r tsconfig-paths/register src/index.ts"
+
   },
   "dependencies": {
     "@types/axios": "^0.14.0",

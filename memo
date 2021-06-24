@@ -1,3 +1,4 @@
+
 // nodemon 실행 명령어
 npx nodemon src/index.ts
 
@@ -5,3 +6,4 @@ npx nodemon src/index.ts
     "dev" : "nodemon --exec ts-node -r tsconfig-paths/register src/index.ts",    
     "start" : "ts-node -r tsconfig-paths/register src/index.ts"  
     },
+

@@ -7,3 +7,4 @@ npx nodemon src/index.ts
     "start" : "ts-node -r tsconfig-paths/register src/index.ts"  
     },
 
+fd

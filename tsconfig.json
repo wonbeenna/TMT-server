@@ -79,7 +79,8 @@
     "paths": {
       "@router": ["router/index"],
       "@userController/*": ["controller/user/*"],
-      "@tripController/*": ["controller/trip/*"]
+      "@tripController/*": ["controller/trip/*"],
+      "@interface": ["interface/index"]
     }
   },
   "include": ["**/*.ts"],

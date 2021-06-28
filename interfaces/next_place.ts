@@ -1,6 +1,6 @@
 import { Place } from "./place";
 
-interface NextPlace {
+export interface NextPlace {
   name: string;
   choice: number;
 }

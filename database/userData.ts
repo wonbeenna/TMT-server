@@ -1,7 +1,8 @@
-import mongoose, { Schema } from "mongoose";
+
+import { model, Schema, Document } from "mongoose";
 import { UserData } from "@interface";
 
-const userDataSchema = new mongoose.Schema<UserData>({
+const userDataSchema = new Schema<UserData>({
   id: {
     type: Number,
     required: true,
@@ -17,3 +18,7 @@ const userDataSchema = new mongoose.Schema<UserData>({
     },
   ],
 });
+
+const userDataModel = model<UserData & Document>("userData", userDataSchema);
+
+export default userDataModel;

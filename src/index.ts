@@ -6,6 +6,7 @@ import mongoose from "mongoose";
 import bodyParser from "body-parser";
 import cookieParser from "cookie-parser";
 import morgan from "morgan";
+const { MONGO_DATABASE, MONGO_USERNAME, MONGO_PASSWORD } = process.env;
 
 // import userRouter from '@userRouter';
 // import userRouter = require('@userRouter')
@@ -42,7 +43,9 @@ app.listen(port, () => {
 
 mongoose
   .connect(
+    //`mongodb+srv://${MONGO_USERNAME}:${MONGO_PASSWORD}@cluster0.8ojkq.mongodb.net/${MONGO_DATABASE}?retryWrites=true&w=majority`,
     "mongodb+srv://sumsum:republicramen@cluster0.8ojkq.mongodb.net/myFirstDatabase?retryWrites=true&w=majority",
+
     {
       useNewUrlParser: true,
       useUnifiedTopology: true,
@@ -53,3 +56,12 @@ mongoose
   .then(() => console.log("MongoDB connected"))
   .catch((err) => console.log(err));
 
+// mongoose.connect(
+//   // "mongodb+srv://sumsum:republicramen@cluster0.8ojkq.mongodb.net/myFirstDatabase?retryWrites=true&w=majority"
+//   "mongodb+srv://m001-student:m001-mongodb-basics@sandbox.wgtfw.mongodb.net/myFirstDatabase?retryWrites=true&w=majority"
+// );
+// var db = mongoose.connection;
+// db.on("error", console.error.bind(console, "connection error:"));
+// db.once("open", function callback() {
+//   console.log("mongo db connection OK.");
+// });

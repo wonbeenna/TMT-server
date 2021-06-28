@@ -1,3 +1,4 @@
+
 import { model, Schema, Document } from "mongoose";
 import { UserData } from "@interface";
 

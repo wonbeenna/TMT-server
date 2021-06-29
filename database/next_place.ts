@@ -2,11 +2,6 @@ import { model, Schema, Document } from "mongoose";
 import { Next_Place } from "@interface";
 
 const nextPlaceSchema = new Schema<Next_Place>({
-  id: {
-    type: Number,
-    required: true,
-    unique: true,
-  },
   place_id: {
     type: Schema.Types.ObjectId,
     ref: "Place",

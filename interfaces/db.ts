@@ -1,7 +1,6 @@
 export interface DB {
-  id: number;
   place: string;
-  theme: string;
+  theme: string[];
   province: number;
   address: string;
   lat: number;

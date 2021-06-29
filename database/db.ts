@@ -2,16 +2,15 @@ import { model, Schema, Document } from "mongoose";
 import { DB } from "@interface";
 
 const dbSchema = new Schema<DB>({
-  id: {
-    type: Number,
-  },
   place: {
     type: String,
     required: true,
   },
-  theme: {
-    type: String,
-  },
+  theme: [
+    {
+      type: String,
+    },
+  ],
   province: {
     type: Number,
     required: true,

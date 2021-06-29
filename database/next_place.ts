@@ -2,6 +2,7 @@ import { model, Schema, Document } from "mongoose";
 import { Next_Place } from "@interface";
 
 const nextPlaceSchema = new Schema<Next_Place>({
+
   place_name: {
     type: String,
     ref: "Place",

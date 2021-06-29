@@ -4,6 +4,7 @@ export const signUp = async (req: Request, res: Response): Promise<void> => {
   try {
     const { name, email, password } = req.body;
     let user = new userModel();
+
     user.name = name;
     user.email = email;
     user.password = password;

@@ -1,13 +1,9 @@
 import { model, Schema, Document } from "mongoose";
 import { TourSpot } from "@interface";
-
+// const Empty4 = new Schema({ any: [{}] });
 const tourSpotSchema = new Schema<TourSpot>({
-  id: {
-    type: Number,
-    required: true,
-  },
-  user_id: {
-    type: Schema.Types.ObjectId,
+  email: {
+    type: String,
     ref: "User",
   },
   spot: {

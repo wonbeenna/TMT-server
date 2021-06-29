@@ -1,13 +1,7 @@
-
 import { model, Schema, Document } from "mongoose";
 import { User } from "@interface";
 
 const userSchema = new Schema<User>({
-  id: {
-    type: String,
-    require: true,
-    unique: true,
-  },
   name: {
     type: String,
     required: true,

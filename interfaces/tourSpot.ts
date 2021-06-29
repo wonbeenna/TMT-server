@@ -1,7 +1,7 @@
 import { User } from "./user";
 
 export interface TourSpot {
-  email: User;
+  email: string;
   spot: string;
   day: string;
 }

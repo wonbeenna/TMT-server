@@ -1,6 +1,6 @@
 import { model, Schema, Document } from "mongoose";
 import { TourSpot } from "@interface";
-
+// const Empty4 = new Schema({ any: [{}] });
 const tourSpotSchema = new Schema<TourSpot>({
   email: {
     type: String,

@@ -1,5 +1,5 @@
 import { User } from "./user";
 export interface UserData {
-  email: User;
+  email: String;
   place: string[];
 }

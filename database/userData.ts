@@ -3,7 +3,7 @@ import { UserData } from "@interface";
 
 const userDataSchema = new Schema<UserData>({
   email: {
-    type: Schema.Types.ObjectId,
+    type: String,
     ref: "User",
   },
   place: [

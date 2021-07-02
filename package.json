@@ -1,8 +1,6 @@
 {
   "scripts": {
-
-    "start" : "nodemon --exec ts-node -r tsconfig-paths/register src/index.ts"
-
+    "start": "nodemon --exec ts-node -r tsconfig-paths/register src/index.ts"
   },
   "dependencies": {
     "@types/axios": "^0.14.0",
@@ -15,6 +13,7 @@
     "@types/mongoose": "^5.11.97",
     "@types/morgan": "^1.9.2",
     "@types/node": "^15.12.4",
+    "bcryptjs": "^2.4.3",
     "body-parser": "^1.19.0",
     "cookie-parser": "^1.4.5",
     "cors": "^2.8.5",
@@ -28,6 +27,7 @@
     "tslib": "^2.3.0"
   },
   "devDependencies": {
+    "@types/bcryptjs": "^2.4.2",
     "nodemon": "^2.0.7",
     "tsconfig-paths": "^3.9.0",
     "typescript": "^4.3.4"

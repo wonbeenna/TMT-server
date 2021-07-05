@@ -7,11 +7,12 @@ import bodyParser from "body-parser";
 import cookieParser from "cookie-parser";
 import morgan from "morgan";
 import MONGO from "../config/config";
+
 //const { MONGO_HOST, MONGO_USERNAME, MONGO_PASSWORD } = process.env;
 
 // import userRouter from '@userRouter';
 // import userRouter = require('@userRouter')
-import { userRouter, tripRouter } from "@router";
+import { userRouter, tripRouter, tokenRouter } from "@router";
 // import userRouter = require("../router/user");
 
 // const userRouter = express.Router();
@@ -33,6 +34,7 @@ app.use(
 
 app.use("/user", userRouter);
 app.use("/trip", tripRouter);
+app.use("/token", tokenRouter);
 
 app.get("/", (req: Request, res: Response) => {
   res.status(201).send("서버는 서버서버해서 서버야");

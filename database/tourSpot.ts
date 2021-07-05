@@ -9,7 +9,10 @@ const tourSpotSchema = new Schema<TourSpot>({
   spot: {
     type: String,
   },
-  day: {
+  startDate: {
+    type: String,
+  },
+  endDate: {
     type: String,
   },
 });

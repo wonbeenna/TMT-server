@@ -6,11 +6,13 @@ export const insertSpot = async (
   res: Response
 ): Promise<void> => {
   try {
-    const { email, spot, day } = req.body;
+    const { email, spot, startDate, endDate } = req.body;
     let tourSpot = new tourSpotModel();
     tourSpot.email = email;
     tourSpot.spot = spot;
-    tourSpot.day = day;
+    tourSpot.startDate = startDate;
+    tourSpot.endDate = endDate;
+
     tourSpot
       .save()
       .then((newTourSpot) => {

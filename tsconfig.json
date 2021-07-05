@@ -80,6 +80,7 @@
       "@router": ["router/index"],
       "@userController/*": ["controller/user/*"],
       "@tripController/*": ["controller/trip/*"],
+      "@tokenController/*": ["controller/token/*"],
       "@interface": ["interfaces/index"]
     }
   },

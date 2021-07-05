@@ -1,53 +1,77 @@
 import { Request, Response } from "express";
 import { sign, verify } from "jsonwebtoken";
 import MONGO from "../../config/config";
+import bcryptjs from "bcryptjs";
 import userModel from "../../database/user";
 import {
   generateAccessToken,
   generateRefreshToken,
   verifyAccessToken,
   verifyRefreshToken,
-} from "../../controller/tokenFunctions/index";
-import { createEmitAndSemanticDiagnosticsBuilderProgram } from "typescript";
-
-/*
-회원정보 get 요청 시, 
-1. 엑세스 토큰 유효성 검사
-1-1. 유효할 경우, 요청하는 정보 보내주기
-1-2. 유효하지 않은 경우, refreshToken 확인 후 accessToken 재발급
-
- */
+} from "@tokenController/index";
 
 export const userInfoPost = async (
   req: Request,
   res: Response
-): Promise<void> => {
+): Promise<any> => {
   try {
+    const userInfo = await verifyAccessToken(req);
+    if (!(<any>userInfo).email) {
+      return res
+        .status(409)
+        .send({ message: "유효하지 않은 access token 입니다." });
+    } else {
+      const { newPw, originalPw } = req.body;
+      const realPw = await userModel.findOne({
+        email: (<any>userInfo).email,
+      });
+
+      const isMatched: boolean = await bcryptjs.compare(
+        originalPw,
+        realPw!.password
+      );
+      if (!isMatched) {
+        res.status(409).send({
+          message: "현재 비밀번호가 일치하지 않습니다. 다시 입력해주세요.",
+        });
+      }
+      const newPassword = await bcryptjs.hash(newPw, 10);
+      const editPassword = await userModel.findOneAndUpdate(
+        {
+          email: (<any>userInfo).email,
+        },
+        { password: newPassword },
+        { new: true }
+      );
+
+      res.status(200).send({
+        message: "비밀번호가 성공적으로 수정되었습니다.",
+      });
+    }
   } catch (err) {
-    res.end();
+    return err;
   }
 };
 
 export const userInfoGet = async (
   req: Request,
   res: Response
-): Promise<void> => {
+): Promise<any> => {
   try {
-    // const { name, email } = req.body;
     const userInfo = await verifyAccessToken(req);
-    console.log("유저인포:", userInfo);
-    if (!userInfo) {
-      res.status(409).send({ message: "유효하지 않은 access token 입니다." });
+    if (!(<any>userInfo).email) {
+      return res
+        .status(409)
+        .send({ message: "유효하지 않은 access token 입니다." });
     } else {
-      userModel.findOne({ userInfo }).then((theUser) => {
-        console.log("더유저: ", theUser);
+      userModel.findOne({ email: (<any>userInfo).email }).then((theUser) => {
         return res.status(200).send({
-          name: theUser?.name,
-          email: theUser?.email,
+          name: (<any>theUser)?.name,
+          email: (<any>theUser)?.email,
         });
       });
     }
   } catch (err) {
-    res.end();
+    return err;
   }
 };

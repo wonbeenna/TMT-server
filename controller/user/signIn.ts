@@ -4,7 +4,7 @@ import userModel from "../../database/user";
 import {
   generateAccessToken,
   generateRefreshToken,
-} from "../../controller/tokenFunctions/index";
+} from "../../controller/token/index";
 import dotenv from "dotenv";
 
 dotenv.config();

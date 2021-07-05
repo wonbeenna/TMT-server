@@ -13,6 +13,9 @@ export const signUp = async (req: Request, res: Response): Promise<void> => {
         message: "이미 사용중인 email입니다!",
       });
     } else {
+      if (!password.length || !name.length || !email.length) {
+        res.status(404).send({ message: "빈 칸을 모두 채워주세요." });
+      }
       await bcryptjs.hash(password, 10, (err, hash) => {
         if (err) {
           return res.status(401).send({

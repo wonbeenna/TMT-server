@@ -7,7 +7,7 @@ npx nodemon src/index.ts
     "start" : "ts-node -r tsconfig-paths/register src/index.ts"  
     },
 
-fd
+
 
 #레저, #바다, #산, #드라이브, #휴식&힐링, #사진, #역사&문화, #야경, #캠핑, #맛집, #노을, #일출, 데이트, 가족, 강, 계곡, 섬, 랜드마크,
 
@@ -41,5 +41,16 @@ fd
 
 {
     "province" : 1,
-    "theme" : ["야경","랜드마크"]
-}
+    "theme" : ["야경","랜드마크"
+
+#레저, #바다, #산, #드라이브, #휴식&힐링, #사진, #역사&문화, #야경, #캠핑, #맛집, #노을, #일출, 데이트, 가족, 강, 계곡, 섬, 랜드마크,
+
+env 안에 있는 애들:
+
+MONGO_USERNAME=
+MONGO_PASSWORD=
+MONGO_HOST=
+ACCESS_SECRET=
+REFRESH_SECRET=
+PORT=
+

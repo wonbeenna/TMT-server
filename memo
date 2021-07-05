@@ -11,6 +11,40 @@ npx nodemon src/index.ts
 
 #레저, #바다, #산, #드라이브, #휴식&힐링, #사진, #역사&문화, #야경, #캠핑, #맛집, #노을, #일출, 데이트, 가족, 강, 계곡, 섬, 랜드마크,
 
+    const { place, theme, province, address, lat, long, photo } = req.body;
+    let db = new dbModel();
+    db.place = place;
+    db.theme = theme;
+    db.province = province;
+    db.address = address;
+    db.lat = lat;
+    db.long = long;
+    db.photo = photo;
+    db.save()
+      .then((newDb) => {
+        console.log("Create success");
+        res.status(200).json({
+          message: "Create success",
+          data: {
+            post: newDb,
+          },
+        });
+      })
+      .catch((err) => {
+        res.status(500).json({
+          message: err,
+        });
+      });
+22일 ~ 24일 // 덕수궁 경복궁 용산역
+22일 덕수궁  23일 경복궁 24일 용산역
+22 24
+
+{
+    "province" : 1,
+    "theme" : ["야경","랜드마크"
+
+#레저, #바다, #산, #드라이브, #휴식&힐링, #사진, #역사&문화, #야경, #캠핑, #맛집, #노을, #일출, 데이트, 가족, 강, 계곡, 섬, 랜드마크,
+
 env 안에 있는 애들:
 
 MONGO_USERNAME=
@@ -19,3 +53,4 @@ MONGO_HOST=
 ACCESS_SECRET=
 REFRESH_SECRET=
 PORT=
+

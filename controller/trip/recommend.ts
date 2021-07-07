@@ -3,10 +3,11 @@ import { Request, Response } from "express";
 
 export const recommend = async (req: Request, res: Response): Promise<void> => {
   try {
-    const { name, next_place_name } = req.body;
+    const { name, next_place_name, like } = req.body;
     let place = new placeModel();
     place.name = name;
     place.next_place_name = next_place_name;
+    place.like = like;
     place
       .save()
       .then((newPlace) => {

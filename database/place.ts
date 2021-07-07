@@ -10,6 +10,9 @@ const placeSchema = new Schema<Place>({
       type: String,
     },
   ],
+  like: {
+    type: Number,
+  },
 });
 
 const placeModel = model<Place & Document>("place", placeSchema);

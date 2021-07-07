@@ -12,7 +12,7 @@ import MONGO from "../config/config";
 
 // import userRouter from '@userRouter';
 // import userRouter = require('@userRouter')
-import { userRouter, tripRouter, tokenRouter } from "@router";
+import { userRouter, tripRouter, tokenRouter, googleRouter } from "@router";
 // import userRouter = require("../router/user");
 
 // const userRouter = express.Router();
@@ -35,6 +35,7 @@ app.use(
 app.use("/user", userRouter);
 app.use("/trip", tripRouter);
 app.use("/token", tokenRouter);
+app.use("/auth", googleRouter);
 
 app.get("/", (req: Request, res: Response) => {
   res.status(201).send("서버는 서버서버해서 서버야");

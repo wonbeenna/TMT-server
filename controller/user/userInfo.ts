@@ -31,7 +31,7 @@ export const userInfoPost = async (
         realPw!.password
       );
       if (!isMatched) {
-        res.status(409).send({
+        res.status(405).send({
           message: "현재 비밀번호가 일치하지 않습니다. 다시 입력해주세요.",
         });
       }

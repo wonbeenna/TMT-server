@@ -1,6 +1,7 @@
 import dbModel from "../../database/db";
 import mongoose from "mongoose";
 import { Request, Response } from "express";
+import placeModel from "database/place";
 
 export const listPost = async (req: Request, res: Response): Promise<void> => {
   try {
@@ -48,7 +49,28 @@ export const listPost = async (req: Request, res: Response): Promise<void> => {
 
 export const listGet = async (req: Request, res: Response): Promise<void> => {
   try {
-    res.send("리스트겟");
+    let topPlaceName: any = [];
+    const topPlace = await placeModel
+      .find()
+      .sort({ like: -1 })
+      .limit(2)
+      .select("-_id name");
+    if (topPlace) {
+      topPlace.forEach(function (value) {
+        topPlaceName.push(value.name);
+      });
+      // console.log(returnTopPlace);
+    }
+    const placeList = await dbModel
+      .find({
+        place: { $in: topPlaceName },
+      })
+      .select("-_id place address lat long photo theme");
+    if (!placeList) {
+      res.status(400).json({ message: "request failed!" });
+    } else {
+      res.status(200).json(placeList);
+    }
   } catch (err) {
     res.end();
   }

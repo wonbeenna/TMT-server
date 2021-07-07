@@ -12,7 +12,7 @@ const dbSchema = new Schema<DB>({
     },
   ],
   province: {
-    type: Number,
+    type: String,
     required: true,
   },
   address: {

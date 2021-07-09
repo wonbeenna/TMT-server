@@ -7,21 +7,17 @@ import bodyParser from "body-parser";
 import cookieParser from "cookie-parser";
 import morgan from "morgan";
 import MONGO from "../config/config";
-
-//const { MONGO_HOST, MONGO_USERNAME, MONGO_PASSWORD } = process.env;
-
-// import userRouter from '@userRouter';
-// import userRouter = require('@userRouter')
+import { MongoClient } from "mongodb";
 import { userRouter, tripRouter, tokenRouter, googleRouter } from "@router";
-// import userRouter = require("../router/user");
 
-// const userRouter = express.Router();
-// const tripRouter = express.Router();
+//const indexer = require("../controller/trip/indexer");
 
+const client = new MongoClient(MONGO.url);
 const port = process.env.PORT;
 
 const app = express();
 app.use(express.json());
+app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use(
   cors({
@@ -41,11 +37,58 @@ app.get("/", (req: Request, res: Response) => {
   res.status(201).send("서버는 서버서버해서 서버야");
 });
 
-app.listen(port, () => {
-  console.log("start server");
+let collection: any;
+
+app.get("/search", async (req: Request, res: Response) => {
+  try {
+    let result = await collection
+      .aggregate([
+        {
+          $search: {
+            autocomplete: {
+              query: `${req.query.spot}`,
+              path: "place",
+            },
+          },
+        },
+      ])
+      .toArray();
+    res.status(200).send(result);
+  } catch (err) {
+    res.status(500).send({ message: "다시 시도해주시기 바랍니다." });
+  }
 });
+
+app.listen(port, async () => {
+  console.log("start server");
+  try {
+    await client.connect();
+    collection = client.db("myFirstDatabase").collection("dbs");
+  } catch (err) {
+    console.log(err);
+  }
+});
+
+// const data = {
+//   elasticsearch: {
+//     url: "http://localhost:",
+//     port: "9200",
+//     elasticsearchIndices: {
+//       PLACE: {
+//         index: "spot",
+//         type: "SPOT",
+//         collectionName: "dbs",
+//       },
+//     },
+//   },
+// };
 
 mongoose
   .connect(MONGO.url, MONGO.options)
   .then(() => console.log("MongoDB connected"))
   .catch((err) => console.log(err));
+
+// const indexName = data.elasticsearch.elasticsearchIndices.PLACE.index;
+// const indexType = data.elasticsearch.elasticsearchIndices.PLACE.type;
+// const tableName = data.elasticsearch.elasticsearchIndices.PLACE.collectionName;
+// indexer.indexMongodbData(indexName, indexType, tableName);

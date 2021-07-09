@@ -1,0 +1,13 @@
+{
+  "elasticsearch": {
+    "url": "http://localhost:",
+    "port": "9200",
+    "elasticsearchIndices": {
+      "PLACE": {
+        "index": "searchPlace",
+        "type": "PLACE",
+        "collectionName": "myFirstDatabase"
+      }
+    }
+  }
+}

@@ -27,7 +27,16 @@ export const likePost = async (req: Request, res: Response): Promise<any> => {
 
 export const likeGet = async (req: Request, res: Response): Promise<void> => {
   try {
-    res.send("라이크겟");
+    const userInfo = await verifyAccessToken(req);
+    if (!userInfo) {
+      res.status(400).send({ message: "access token err" });
+    } else {
+      const user = await userDataModel.findOne({
+        email: (<any>userInfo).email,
+      });
+      console.log(user?.place);
+      res.status(200).json({ place: user?.place });
+    }
   } catch (err) {
     res.end();
   }

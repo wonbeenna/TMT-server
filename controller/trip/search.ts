@@ -5,7 +5,29 @@ import { Collection } from "mongoose";
 // const MongoClient = require("mongodb").MongoClient;
 // const River = require("mongo-river-elastic");
 
-export const search = async (req: Request, res: Response): Promise<any> => {
+export const searchGet = async (req: Request, res: Response): Promise<any> => {
+  try {
+    const lists = await dbModel.find((err: Error, data: any) => {
+      if (err) {
+        res.status(500).send(err);
+      }
+      data.forEach((el: any) => {
+        let list = [];
+        list.push(el);
+      });
+    });
+    let placeOnly = lists.map((el) => {
+      return { place: el.place };
+    });
+    return res.status(200).send({
+      placeOnly,
+    });
+  } catch (err) {
+    return err;
+  }
+};
+
+export const searchPost = async (req: Request, res: Response): Promise<any> => {
   /*
     ** (엘라스틱 서치 적용 전) 기본 기능 구현!
     1. 클라이언트에서 입력한 인풋값을 받아온다

@@ -28,7 +28,7 @@ export const signUp = async (req: Request, res: Response): Promise<void> => {
             email,
             password: hash,
           });
-
+          // 유저 데이터를 newUserDataModel 만들기 && save 시키기  => 유저테이블도 같이 생성
           return user
             .save()
             .then((newUser) => {

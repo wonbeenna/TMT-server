@@ -39,25 +39,25 @@ app.get("/", (req: Request, res: Response) => {
 
 let collection: any;
 
-app.get("/search", async (req: Request, res: Response) => {
-  try {
-    let result = await collection
-      .aggregate([
-        {
-          $search: {
-            autocomplete: {
-              query: `${req.query.spot}`,
-              path: "place",
-            },
-          },
-        },
-      ])
-      .toArray();
-    res.status(200).send(result);
-  } catch (err) {
-    res.status(500).send({ message: "다시 시도해주시기 바랍니다." });
-  }
-});
+// app.get("/search", async (req: Request, res: Response) => {
+//   try {
+//     let result = await collection
+//       .aggregate([
+//         {
+//           $search: {
+//             autocomplete: {
+//               query: `${req.query.spot}`,
+//               path: "place",
+//             },
+//           },
+//         },
+//       ])
+//       .toArray();
+//     res.status(200).send(result);
+//   } catch (err) {
+//     res.status(500).send({ message: "다시 시도해주시기 바랍니다." });
+//   }
+// });
 
 app.listen(port, async () => {
   console.log("start server");

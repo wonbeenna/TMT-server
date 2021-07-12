@@ -54,3 +54,8 @@ ACCESS_SECRET=
 REFRESH_SECRET=
 PORT=
 
+{
+  "email":"post@pp",
+  "password":"pppppppp"
+}
+

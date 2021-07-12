@@ -59,3 +59,31 @@ PORT=
   "password":"pppppppp"
 }
 
+{
+  "place":[
+        [
+          {
+              "theme" : ["야경","바다","휴식&힐링","드라이브","데이트", "가족","랜드마크"],
+              "place" : "인천공항",
+              "province" : "인천",
+              "address" : "인천광역시 중구 공항로 272",
+              "lat" : 37.465378215166105,
+              "long" : 126.44113585222271,
+              "photo" : "http://www.econovill.com/news/photo/201506/250990_44681_4134.jpg"
+          } 
+        ],
+        [
+          {
+              "theme" : ["야경","바다","휴식&힐링","레저","데이트", "가족"],
+              "place" : "광안리",
+              "province" : "부산",
+              "address" : "부산광역시 광안2동",
+              "lat" : 35.15271258498277,
+              "long" : 129.11866595831683,
+              "photo" : "https://lh5.googleusercontent.com/p/AF1QipORZ0I91bdGcO94MP_5KDRulMPxjV..."
+          } 
+        ]
+    ],
+  "startDate":"2021-07-08",
+  "endDate" : "2021-07-10"
+}

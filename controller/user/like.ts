@@ -83,7 +83,6 @@ export const likeDelete = async (
           $set: { like: (<any>placeData).like - 1 },
         }
       );
-      // console.log("placeData.like: ", (<any>placeData).like);
       res.status(200).json({ place: place });
     }
   } catch (err) {

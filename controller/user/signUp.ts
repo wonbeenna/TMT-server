@@ -30,25 +30,28 @@ export const signUp = async (req: Request, res: Response): Promise<void> => {
             password: hash,
           });
 
-          return user
-            .save()
-            .then((newUser) => {
-              let userData = new userDataModel({
-                email: newUser.email,
-                place: [],
-              });
-              return res.status(201).send({
-                message: "회원가입이 성공적으로 완료되었습니다!",
-                name: newUser.name,
-                email: newUser.email,
-                password: newUser.password,
-              });
-            })
-            .catch((err) => {
-              res.status(500).json({
-                message: err,
-              });
+          return user.save().then((newUser) => {
+            let userData = new userDataModel({
+              email: newUser.email,
+              place: [],
             });
+            return userData
+              .save()
+              .then(() => {
+                return res.status(201).send({
+                  message: "회원가입이 성공적으로 완료되었습니다!",
+                  name: newUser.name,
+                  email: newUser.email,
+                  password: newUser.password,
+                });
+              })
+
+              .catch((err) => {
+                res.status(500).json({
+                  message: err,
+                });
+              });
+          });
         }
       });
     }

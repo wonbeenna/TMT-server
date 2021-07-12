@@ -1,10 +1,35 @@
-import { Request, Response } from 'express';
+import tourSpotModel from "database/tourSpot";
+import { Request, Response } from "express";
 
-export const insertSpot = async (req : Request, res : Response) : Promise<void> => {
-    try {
-        res.send('인설트스팟');
-    }
-    catch (err) {
-        res.end();
-    }
-}
+export const insertSpot = async (
+  req: Request,
+  res: Response
+): Promise<void> => {
+  try {
+    const { email, spot, startDate, endDate } = req.body;
+    let tourSpot = new tourSpotModel();
+    tourSpot.email = email;
+    tourSpot.spot = spot;
+    tourSpot.startDate = startDate;
+    tourSpot.endDate = endDate;
+
+    tourSpot
+      .save()
+      .then((newTourSpot) => {
+        console.log("Create success");
+        res.status(200).json({
+          message: "Create success",
+          data: {
+            post: newTourSpot,
+          },
+        });
+      })
+      .catch((err) => {
+        res.status(500).json({
+          message: err,
+        });
+      });
+  } catch (err) {
+    res.end();
+  }
+};

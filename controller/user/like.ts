@@ -9,7 +9,7 @@ export const likePost = async (req: Request, res: Response): Promise<any> => {
       res.status(400).send({ message: "access token err" });
     } else {
       const { place } = req.body;
-      await userDataModel.update(
+      await userDataModel.updateOne(
         {
           email: (<any>userInfo).email,
         },
@@ -36,6 +36,32 @@ export const likeGet = async (req: Request, res: Response): Promise<void> => {
       });
       console.log(user?.place);
       res.status(200).json({ place: user?.place });
+    }
+  } catch (err) {
+    res.end();
+  }
+};
+
+export const likeDelete = async (
+  req: Request,
+  res: Response
+): Promise<void> => {
+  try {
+    const userInfo = await verifyAccessToken(req);
+    if (!userInfo) {
+      res.status(400).send({ message: "access token err" });
+    } else {
+      const { place } = req.body;
+      await userDataModel.updateOne(
+        {
+          email: (<any>userInfo).email,
+        },
+        {
+          $pull: { place: place },
+        }
+      );
+      // console.log("place: ", place);
+      res.status(200).json({ place: place });
     }
   } catch (err) {
     res.end();

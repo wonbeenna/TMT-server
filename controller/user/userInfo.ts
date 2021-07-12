@@ -1,14 +1,7 @@
 import { Request, Response } from "express";
-import { sign, verify } from "jsonwebtoken";
-import MONGO from "../../config/config";
 import bcryptjs from "bcryptjs";
 import userModel from "../../database/user";
-import {
-  generateAccessToken,
-  generateRefreshToken,
-  verifyAccessToken,
-  verifyRefreshToken,
-} from "@tokenController/index";
+import { verifyAccessToken } from "@tokenController/index";
 
 export const userInfoPost = async (
   req: Request,
@@ -36,7 +29,7 @@ export const userInfoPost = async (
         });
       }
       const newPassword = await bcryptjs.hash(newPw, 10);
-      const editPassword = await userModel.findOneAndUpdate(
+      await userModel.findOneAndUpdate(
         {
           email: (<any>userInfo).email,
         },

@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import bcryptjs from "bcryptjs";
 import userModel from "../../database/user";
+import userDataModel from "../../database/userData";
 
 export const signUp = async (req: Request, res: Response): Promise<void> => {
   try {
@@ -28,22 +29,29 @@ export const signUp = async (req: Request, res: Response): Promise<void> => {
             email,
             password: hash,
           });
-          // 유저 데이터를 newUserDataModel 만들기 && save 시키기  => 유저테이블도 같이 생성
-          return user
-            .save()
-            .then((newUser) => {
-              return res.status(201).send({
-                message: "회원가입이 성공적으로 완료되었습니다!",
-                name: newUser.name,
-                email: newUser.email,
-                password: newUser.password,
-              });
-            })
-            .catch((err) => {
-              res.status(500).json({
-                message: err,
-              });
+
+          return user.save().then((newUser) => {
+            let userData = new userDataModel({
+              email: newUser.email,
+              place: [],
             });
+            return userData
+              .save()
+              .then(() => {
+                return res.status(201).send({
+                  message: "회원가입이 성공적으로 완료되었습니다!",
+                  name: newUser.name,
+                  email: newUser.email,
+                  password: newUser.password,
+                });
+              })
+
+              .catch((err) => {
+                res.status(500).json({
+                  message: err,
+                });
+              });
+          });
         }
       });
     }

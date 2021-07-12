@@ -1,4 +1,5 @@
 import userDataModel from "database/userData";
+import placeModel from "database/place";
 import { Request, Response } from "express";
 import { verifyAccessToken } from "@tokenController/index";
 
@@ -17,7 +18,18 @@ export const likePost = async (req: Request, res: Response): Promise<any> => {
           $addToSet: { place: place },
         }
       );
-      // console.log("place: ", place);
+      const placeData = await placeModel.findOne({
+        name: place,
+      });
+      await placeModel.updateOne(
+        {
+          name: place,
+        },
+        {
+          $set: { like: (<any>placeData).like + 1 },
+        }
+      );
+      // console.log("placeData.like: ", (<any>placeData).like);
       res.status(200).json({ place: place });
     }
   } catch (err) {
@@ -60,7 +72,18 @@ export const likeDelete = async (
           $pull: { place: place },
         }
       );
-      // console.log("place: ", place);
+      const placeData = await placeModel.findOne({
+        name: place,
+      });
+      await placeModel.updateOne(
+        {
+          name: place,
+        },
+        {
+          $set: { like: (<any>placeData).like - 1 },
+        }
+      );
+      // console.log("placeData.like: ", (<any>placeData).like);
       res.status(200).json({ place: place });
     }
   } catch (err) {

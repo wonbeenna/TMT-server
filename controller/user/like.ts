@@ -21,6 +21,28 @@ export const likePost = async (req: Request, res: Response): Promise<any> => {
       const placeData = await placeModel.findOne({
         name: place,
       });
+      if (!placeData) {
+        const newPlace = new placeModel();
+        newPlace.name = place;
+        newPlace.next_place_name = [];
+        newPlace.like = 1;
+        newPlace
+          .save()
+          .then((newPlace) => {
+            console.log("Create success");
+            res.status(200).json({
+              message: "Create success",
+              data: {
+                post: newPlace,
+              },
+            });
+          })
+          .catch((err) => {
+            res.status(500).json({
+              message: err,
+            });
+          });
+      }
       await placeModel.updateOne(
         {
           name: place,

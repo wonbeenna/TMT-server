@@ -63,24 +63,32 @@ PORT=
   "place":[
         [
           {
-              "theme" : ["야경","바다","휴식&힐링","드라이브","데이트", "가족","랜드마크"],
-              "place" : "인천공항",
-              "province" : "인천",
-              "address" : "인천광역시 중구 공항로 272",
-              "lat" : 37.465378215166105,
-              "long" : 126.44113585222271,
-              "photo" : "http://www.econovill.com/news/photo/201506/250990_44681_4134.jpg"
+              "theme" : ["역사&문화","야경","휴식&힐링","가족"],
+              "place" : "경복궁",
+              "address" : "서울특별시 종로구 세종로 사직로 161",
+              "lat" : 37.579698652999916,
+              "long" : 126.97699720184801,
+              "photo" : "http://tong.visitkorea.or.kr/cms/resource/23/2678623_image2_1.jpg"
           } 
         ],
         [
           {
-              "theme" : ["야경","바다","휴식&힐링","레저","데이트", "가족"],
-              "place" : "광안리",
-              "province" : "부산",
-              "address" : "부산광역시 광안2동",
-              "lat" : 35.15271258498277,
-              "long" : 129.11866595831683,
-              "photo" : "https://lh5.googleusercontent.com/p/AF1QipORZ0I91bdGcO94MP_5KDRulMPxjV..."
+              "theme" : ["역사&문화","야경","랜드마크","휴식&힐링","사진"],
+              "place" : "덕수궁",
+              "address" : "서울 중구 세종대로 99 덕수궁",
+              "lat" : 37.565972575797396,
+              "long" :126.97515152495737,
+              "photo" :"www.dfjkjeeogoo.png"
+          } 
+        ],
+        [
+          {
+              "theme" : ["레저","휴식&힐링","가족"],
+              "place" : "강동그린웨이 가족캠핑장",
+              "address" : "서울특별시 강동구 천호대로206길 87",
+              "lat" : 37.5358637478,
+              "long" :127.1540697938,
+              "photo" :"http://tong.visitkorea.or.kr/cms/resource/69/2030469_image2_1.jpg"
           } 
         ]
     ],
@@ -88,5 +96,19 @@ PORT=
   "endDate" : "2021-07-10"
 }
 
+
+    const { data } = req.body;
+    const spot = data.post.spot;
+
+    function addNextPlace(spot: String, nextSpot: String) {
+      
+    }
+    let spots = [];
+    for (let i = 0; i < spot.length - 1; i++) {
+      spots.push(spot[i][0].place);
+      addNextPlace(spot[i][0].place, spot[i + 1][0].place);
+    }
+    console.log(spots);
+    res.status(200).json(spots);
 
 

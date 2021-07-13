@@ -1,4 +1,5 @@
 import tourSpotModel from "database/tourSpot";
+import nextPlaceModel from "database/next_place";
 import { Request, Response } from "express";
 import { verifyAccessToken } from "@tokenController/index";
 
@@ -25,10 +26,27 @@ export const insertSpot = async (
       tourSpot.spot = place;
       tourSpot.startDate = startDate;
       tourSpot.endDate = endDate;
-
       tourSpot
         .save()
         .then((newTourSpot) => {
+          const spot = (<any>newTourSpot).spot;
+          let spots = [];
+
+          const addNextPlace = async (
+            spot: String,
+            nextSpot: String
+          ): Promise<void> => {
+            const aa = await nextPlaceModel.findOne({
+              place_name: spot,
+              next_place: { $in: [[nextSpot]] },
+            });
+            console.log(spot, nextSpot, aa);
+          };
+
+          // for (let i = 0; i < spot.length - 1; i++) {
+          //   spots.push(spot[i][0].place);
+          addNextPlace(spot[0][0].place, spot[1][0].place);
+          // }
           console.log("Create success");
           res.status(200).json({
             message: "Create success",

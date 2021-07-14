@@ -1,5 +1,4 @@
 import dbModel from "../../database/db";
-import mongoose from "mongoose";
 import { Request, Response } from "express";
 import placeModel from "database/place";
 
@@ -18,7 +17,7 @@ export const listPost = async (req: Request, res: Response): Promise<void> => {
       } else {
         res.status(200).json(placeList);
       }
-    } else if (!theme) {
+    } else if (theme.length === 0) {
       const placeList = await dbModel
         .find({
           province: province,
@@ -59,7 +58,7 @@ export const listGet = async (req: Request, res: Response): Promise<void> => {
       topPlace.forEach(function (value) {
         topPlaceName.push(value.name);
       });
-      // console.log(returnTopPlace);
+      console.log(topPlaceName);
     }
     const placeList = await dbModel
       .find({

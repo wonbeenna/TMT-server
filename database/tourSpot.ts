@@ -6,9 +6,11 @@ const tourSpotSchema = new Schema<TourSpot>({
     type: String,
     ref: "User",
   },
-  spot: {
-    type: String,
-  },
+  spot: [
+    {
+      type: Array,
+    },
+  ],
   startDate: {
     type: String,
   },

@@ -1,5 +1,7 @@
 // import * as express  from 'express';
-import express from "express";
+import express, { Express } from "express";
+import fs from "fs";
+import https from "https";
 import { Request, Response } from "express";
 import cors from "cors";
 import mongoose from "mongoose";
@@ -60,7 +62,26 @@ app.get("/", (req: Request, res: Response) => {
 
 let collection: any;
 
-app.listen(port, async () => {
+let server: https.Server | Express;
+let serverType = "";
+if (
+  fs.existsSync(__dirname + "/key.pem") &&
+  fs.existsSync(__dirname + "/cert.pem")
+) {
+  server = https.createServer(
+    {
+      key: fs.readFileSync(__dirname + "/key.pem", "utf-8"),
+      cert: fs.readFileSync(__dirname + "/cert.pem", "utf-8"),
+    },
+    app
+  );
+  serverType = "https";
+} else {
+  server = app;
+  serverType = "http";
+}
+
+server.listen(port, async () => {
   console.log("start server");
 });
 
@@ -68,3 +89,5 @@ mongoose
   .connect(MONGO.url, MONGO.options)
   .then(() => console.log("MongoDB connected"))
   .catch((err) => console.log(err));
+
+export default server;

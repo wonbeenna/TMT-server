@@ -9,6 +9,7 @@ import { signOut } from "@userController/signOut";
 import { signUp } from "@userController/signUp";
 import { userInfoPost } from "@userController/userInfo";
 import { userInfoGet } from "@userController/userInfo";
+import { nonUser } from "@userController/nonUser";
 
 const router = express.Router();
 
@@ -21,6 +22,7 @@ router.post("/signOut", signOut);
 router.post("/signUp", signUp);
 router.post("/userInfo", userInfoPost);
 router.get("/userInfo", userInfoGet);
+router.get("/nonUser", nonUser);
 
 export = router;
 

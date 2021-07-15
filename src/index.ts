@@ -7,13 +7,34 @@ import bodyParser from "body-parser";
 import cookieParser from "cookie-parser";
 import morgan from "morgan";
 import MONGO from "../config/config";
-import { MongoClient } from "mongodb";
+//import { MongoClient } from "mongodb";
 import { userRouter, tripRouter, tokenRouter, googleRouter } from "@router";
 
-//const indexer = require("../controller/trip/indexer");
-
-const client = new MongoClient(MONGO.url);
+//const client = new MongoClient(MONGO.url);
 const port = process.env.PORT;
+// const MongoClient = require("mongodb").MongoClient;
+
+// MongoClient.connect(MONGO.url, (err: Error, db: any) => {
+//   if (err) throw err;
+
+//   //Retrieve your chosen database
+//   let dbo = db.db("myFirstDatabase");
+
+//   /*  Create a mongodb index to remove any document with 'createdAt'
+//      field every 30 seconds.
+//  */
+//   dbo
+//     .collection("nonUsers")
+//     .createIndex(
+//       { createdAt: 1 },
+//       { expireAfterSeconds: 30 },
+//       (err: Error, dbResult: any) => {
+//         if (err) throw err;
+//         console.log("Index Created");
+//         db.close();
+//       }
+//     );
+// });
 
 const app = express();
 app.use(express.json());
@@ -39,56 +60,11 @@ app.get("/", (req: Request, res: Response) => {
 
 let collection: any;
 
-// app.get("/search", async (req: Request, res: Response) => {
-//   try {
-//     let result = await collection
-//       .aggregate([
-//         {
-//           $search: {
-//             autocomplete: {
-//               query: `${req.query.spot}`,
-//               path: "place",
-//             },
-//           },
-//         },
-//       ])
-//       .toArray();
-//     res.status(200).send(result);
-//   } catch (err) {
-//     res.status(500).send({ message: "다시 시도해주시기 바랍니다." });
-//   }
-// });
-
 app.listen(port, async () => {
   console.log("start server");
-  try {
-    await client.connect();
-    collection = client.db("myFirstDatabase").collection("dbs");
-  } catch (err) {
-    console.log(err);
-  }
 });
-
-// const data = {
-//   elasticsearch: {
-//     url: "http://localhost:",
-//     port: "9200",
-//     elasticsearchIndices: {
-//       PLACE: {
-//         index: "spot",
-//         type: "SPOT",
-//         collectionName: "dbs",
-//       },
-//     },
-//   },
-// };
 
 mongoose
   .connect(MONGO.url, MONGO.options)
   .then(() => console.log("MongoDB connected"))
   .catch((err) => console.log(err));
-
-// const indexName = data.elasticsearch.elasticsearchIndices.PLACE.index;
-// const indexType = data.elasticsearch.elasticsearchIndices.PLACE.type;
-// const tableName = data.elasticsearch.elasticsearchIndices.PLACE.collectionName;
-// indexer.indexMongodbData(indexName, indexType, tableName);

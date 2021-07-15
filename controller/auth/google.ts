@@ -11,12 +11,6 @@ const client = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
 import dotenv from "dotenv";
 dotenv.config();
 
-/*
-  1. 클라이언트로부터 구글 토큰을 받아온다
-  2. 받은 토큰을 verify 한다
-  2-1. 없을 경우, 아이디와 이름, 이메일+토큰 을 조합한 비밀번호를 적용해 회원가입
-
-   */
 export const googleLogin = async (
   req: Request,
   res: Response
@@ -27,12 +21,12 @@ export const googleLogin = async (
     idToken: token,
     audience: process.env.GOOGLE_CLIENT_ID,
   });
-  console.log("유저: ", user.getPayload());
+
   const payload = user.getPayload();
   try {
     if (payload?.email_verified) {
       const findingUser = await userModel.findOne({ email: payload.email });
-      console.log("파인딩 유저: ", findingUser);
+
       if (findingUser) {
         const accessToken = generateAccessToken(findingUser);
         const refreshToken = generateRefreshToken(findingUser);

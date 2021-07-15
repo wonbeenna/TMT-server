@@ -3,6 +3,7 @@ import { Request, Response } from "express";
 import MONGO from "../../config/config";
 import userModel from "../../database/user";
 import { User } from "../../interfaces/user";
+import { NonUser } from "../../interfaces/nonUser";
 
 // 로그인 시 엑세스 토큰과 리프레시토큰 부여
 
@@ -15,6 +16,20 @@ export const generateAccessToken = (user: User) => {
 
 export const generateRefreshToken = (user: User) => {
   return sign({ email: user.email }, MONGO.token.refreshSecret!, {
+    algorithm: "HS256",
+    expiresIn: "14d",
+  });
+};
+
+export const nonUserAccessToken = (nonUser: NonUser) => {
+  return sign({ email: nonUser.email }, MONGO.token.accessSecret!, {
+    algorithm: "HS256",
+    expiresIn: "2h",
+  });
+};
+
+export const nonUserRefreshToken = (nonUser: NonUser) => {
+  return sign({ email: nonUser.email }, MONGO.token.refreshSecret!, {
     algorithm: "HS256",
     expiresIn: "14d",
   });

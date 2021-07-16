@@ -24,16 +24,16 @@ export const generateRefreshToken = (user: User) => {
 export const nonUserAccessToken = (nonUser: NonUser) => {
   return sign({ email: nonUser.email }, MONGO.token.accessSecret!, {
     algorithm: "HS256",
-    expiresIn: "2h",
+    expiresIn: "1d",
   });
 };
 
-export const nonUserRefreshToken = (nonUser: NonUser) => {
-  return sign({ email: nonUser.email }, MONGO.token.refreshSecret!, {
-    algorithm: "HS256",
-    expiresIn: "14d",
-  });
-};
+// export const nonUserRefreshToken = (nonUser: NonUser) => {
+//   return sign({ email: nonUser.email }, MONGO.token.refreshSecret!, {
+//     algorithm: "HS256",
+//     expiresIn: "14d",
+//   });
+// };
 
 // 다른 페이지 이동이나 수정 시 엑세스 토큰 유효 여부 확인
 

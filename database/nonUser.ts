@@ -14,7 +14,7 @@ const nonUserSchema = new Schema<NonUser>({
   createdAt: {
     type: Date,
     default: Date.now,
-    expires: 60,
+    index: { expires: "1d" },
   },
 });
 

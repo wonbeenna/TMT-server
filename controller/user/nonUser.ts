@@ -1,9 +1,6 @@
 import { Request, Response } from "express";
 import nonUserModel from "../../database/nonUser";
-import {
-  nonUserAccessToken,
-  nonUserRefreshToken,
-} from "../../controller/token/index";
+import { nonUserAccessToken } from "../../controller/token/index";
 
 export const nonUser = async (req: Request, res: Response): Promise<void> => {
   /*
@@ -23,11 +20,11 @@ export const nonUser = async (req: Request, res: Response): Promise<void> => {
         console.log("누구?: ", newRandom);
 
         const accessToken = nonUserAccessToken(newRandom);
-        const refreshToken = nonUserRefreshToken(newRandom);
+
         res.status(200).send({
           message: "비회원로그인에 성공하였습니다!",
           accessToken: accessToken,
-          refreshToken: refreshToken,
+
           email: newRandom.email,
           password: newRandom.password,
         });

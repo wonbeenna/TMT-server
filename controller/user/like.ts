@@ -69,13 +69,8 @@ export const likeGet = async (req: Request, res: Response): Promise<void> => {
       const user = await userDataModel.findOne({
         email: (<any>userInfo).email,
       });
-      const db = await dbModel
-        .find({
-          place: { $in: (<any>user).place },
-        })
-        .select("-_id place photo");
-      console.log(user?.place, db);
-      res.status(200).json(db);
+      console.log(user?.place);
+      res.status(200).json({ place: user?.place });
     }
   } catch (err) {
     res.end();

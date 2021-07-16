@@ -52,7 +52,7 @@ export const listGet = async (req: Request, res: Response): Promise<void> => {
     const topPlace = await placeModel
       .find()
       .sort({ like: -1 })
-      .limit(2)
+      .limit(10)
       .select("-_id name");
     if (topPlace) {
       topPlace.forEach(function (value) {

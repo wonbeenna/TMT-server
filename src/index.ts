@@ -1,4 +1,6 @@
+
 import express from "express";
+
 import { Request, Response } from "express";
 import cors from "cors";
 import mongoose from "mongoose";
@@ -31,7 +33,9 @@ app.get("/", (req: Request, res: Response) => {
   res.status(201).send("서버는 서버서버해서 서버야");
 });
 
+
 app.listen(port, async () => {
+
   console.log("start server");
 });
 
@@ -39,3 +43,4 @@ mongoose
   .connect(MONGO.url, MONGO.options)
   .then(() => console.log("MongoDB connected"))
   .catch((err) => console.log(err));
+

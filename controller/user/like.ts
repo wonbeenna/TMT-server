@@ -1,5 +1,6 @@
 import userDataModel from "database/userData";
 import placeModel from "database/place";
+import dbModel from "../../database/db";
 import { Request, Response } from "express";
 import { verifyAccessToken } from "@tokenController/index";
 

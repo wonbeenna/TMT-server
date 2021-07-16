@@ -1,22 +1,20 @@
 import { model, Schema, Document } from "mongoose";
 import { Next_Place } from "@interface";
-
+/*
+const placeSchema = new Schema<aa>({
+  place: {
+    type: String,
+  },
+  like: {
+    type: Number,
+  },
+});
+*/
 const nextPlaceSchema = new Schema<Next_Place>({
-
   place_name: {
     type: String,
-    ref: "Place",
   },
-  next_place: [
-    [
-      {
-        type: String,
-      },
-      {
-        type: Number,
-      },
-    ],
-  ],
+  next_place: [{ type: Object }],
 });
 
 const nextPlaceModel = model<Next_Place & Document>(

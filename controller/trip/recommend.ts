@@ -16,7 +16,7 @@ export const recommend = async (req: Request, res: Response): Promise<void> => {
           place: { $in: next_place[0].next_place_name },
         })
         .select("-_id place address lat long photo theme");
-      console.log(placeList);
+
       res.status(200).json(placeList);
     }
   } catch (err) {

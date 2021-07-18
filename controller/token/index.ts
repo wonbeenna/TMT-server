@@ -1,7 +1,6 @@
 import { sign, verify } from "jsonwebtoken";
 import { Request, Response } from "express";
 import MONGO from "../../config/config";
-import userModel from "../../database/user";
 import { User } from "../../interfaces/user";
 import { NonUser } from "../../interfaces/nonUser";
 
@@ -28,13 +27,6 @@ export const nonUserAccessToken = (nonUser: NonUser) => {
   });
 };
 
-// export const nonUserRefreshToken = (nonUser: NonUser) => {
-//   return sign({ email: nonUser.email }, MONGO.token.refreshSecret!, {
-//     algorithm: "HS256",
-//     expiresIn: "14d",
-//   });
-// };
-
 // 다른 페이지 이동이나 수정 시 엑세스 토큰 유효 여부 확인
 
 export const verifyAccessToken = (req: Request) => {
@@ -51,14 +43,6 @@ export const verifyAccessToken = (req: Request) => {
 };
 
 // 액세스 토큰 만료 시, 리프레쉬 토큰 확인
-
-// export const verifyRefreshToken = (refreshToken: string) => {
-//   try {
-//     return verify(refreshToken, MONGO.token.refreshSecret!);
-//   } catch (err) {
-//     return "유효하지 않은 리프레쉬 토큰입니다.";
-//   }
-// };
 
 export const verifyRefreshToken = (req: Request) => {
   const authorization = req.headers["authorization"];

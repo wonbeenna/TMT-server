@@ -1,6 +1,5 @@
 import userDataModel from "database/userData";
 import placeModel from "database/place";
-import dbModel from "../../database/db";
 import { Request, Response } from "express";
 import { verifyAccessToken } from "@tokenController/index";
 
@@ -30,7 +29,6 @@ export const likePost = async (req: Request, res: Response): Promise<any> => {
         newPlace
           .save()
           .then((newPlace) => {
-            console.log("Create success");
             res.status(200).json({
               message: "Create success",
               data: {
@@ -52,7 +50,7 @@ export const likePost = async (req: Request, res: Response): Promise<any> => {
           $set: { like: (<any>placeData).like + 1 },
         }
       );
-      // console.log("placeData.like: ", (<any>placeData).like);
+
       res.status(200).json({ place: place });
     }
   } catch (err) {
@@ -69,7 +67,7 @@ export const likeGet = async (req: Request, res: Response): Promise<void> => {
       const user = await userDataModel.findOne({
         email: (<any>userInfo).email,
       });
-      console.log(user?.place);
+
       res.status(200).json({ place: user?.place });
     }
   } catch (err) {

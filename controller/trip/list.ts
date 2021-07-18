@@ -5,7 +5,7 @@ import placeModel from "database/place";
 export const listPost = async (req: Request, res: Response): Promise<void> => {
   try {
     const { province, theme } = req.body;
-    // console.log(theme);
+
     if (!province) {
       const placeList = await dbModel
         .find({
@@ -52,13 +52,12 @@ export const listGet = async (req: Request, res: Response): Promise<void> => {
     const topPlace = await placeModel
       .find()
       .sort({ like: -1 })
-      .limit(2)
+      .limit(10)
       .select("-_id name");
     if (topPlace) {
       topPlace.forEach(function (value) {
         topPlaceName.push(value.name);
       });
-      console.log(topPlaceName);
     }
     const placeList = await dbModel
       .find({

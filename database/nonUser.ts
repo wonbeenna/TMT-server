@@ -1,16 +1,11 @@
 import { model, Schema, Document } from "mongoose";
-import { User } from "@interface";
+import { NonUser } from "@interface";
 
-const userSchema = new Schema<User>({
-  name: {
-    type: String,
-    required: true,
-  },
+const nonUserSchema = new Schema<NonUser>({
   email: {
     type: String,
     required: true,
     lowercase: true,
-    unique: true,
   },
   password: {
     type: String,
@@ -19,9 +14,10 @@ const userSchema = new Schema<User>({
   createdAt: {
     type: Date,
     default: Date.now,
+    index: { expires: "1d" },
   },
 });
 
-const userModel = model<User & Document>("user", userSchema);
+const nonUserModel = model<NonUser & Document>("nonUser", nonUserSchema);
 
-export default userModel;
+export default nonUserModel;

@@ -33,21 +33,35 @@ export const insertSpot = async (
           let spots = [];
 
           const addNextPlace = async (
-            spot: String,
-            nextSpot: String
+            spot: string,
+            nextSpot: string
           ): Promise<void> => {
-            const aa = await nextPlaceModel.findOne({
+            const placeName = await nextPlaceModel.findOne({
               place_name: spot,
-              next_place: { $in: [[nextSpot]] },
             });
-            console.log(spot, nextSpot, aa);
+            if (!placeName) {
+              interface Next_Place {
+                [nextSpot: string]: Number;
+              }
+              var push: Next_Place = {};
+              push[nextSpot] = 1;
+
+              const newPlaceName = new nextPlaceModel({
+                place_name: spot,
+                next_place: push,
+              });
+
+              newPlaceName.save();
+            }
+
+            await nextPlaceModel.updateOne({});
           };
 
-          // for (let i = 0; i < spot.length - 1; i++) {
-          //   spots.push(spot[i][0].place);
-          addNextPlace(spot[0][0].place, spot[1][0].place);
-          // }
-          console.log("Create success");
+          for (let i = 0; i < spot.length - 2; i++) {
+            spots.push(spot[i][0].place);
+            addNextPlace(spot[i][0].place, spot[i + 1][0].place);
+          }
+
           res.status(200).json({
             message: "Create success",
             data: {

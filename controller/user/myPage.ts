@@ -13,14 +13,7 @@ export const myPage = async (req: Request, res: Response): Promise<void> => {
           email: <any>userInfo.email,
         })
         .select("-_id spot startDate endDate");
-      /*
-      const placeList = await dbModel
-        .find({
-          place: { $in: (<any>userSpot).spot },
-        })
-        .select("-_id place address lat long photo theme");
-        */
-      console.log("userSpot : ", userSpot);
+
       res.status(200).json(userSpot);
     }
   } catch (err) {

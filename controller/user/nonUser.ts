@@ -17,8 +17,6 @@ export const nonUser = async (req: Request, res: Response): Promise<void> => {
     return randomInfo
       .save()
       .then((newRandom) => {
-        console.log("누구?: ", newRandom);
-
         const accessToken = nonUserAccessToken(newRandom);
 
         res.status(200).send({

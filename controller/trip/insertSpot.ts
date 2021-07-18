@@ -38,7 +38,6 @@ export const insertSpot = async (
           ): Promise<void> => {
             const placeName = await nextPlaceModel.findOne({
               place_name: spot,
-              // next_place: { $in: [[nextSpot, "7"]] },
             });
             if (!placeName) {
               interface Next_Place {
@@ -53,20 +52,16 @@ export const insertSpot = async (
               });
 
               newPlaceName.save();
-              console.log("없어서 만들었어요", push);
             }
-            // else {
-            //   await placeName.find().where('');
-            // }
+
             await nextPlaceModel.updateOne({});
-            console.log(spot, nextSpot, placeName);
           };
 
           for (let i = 0; i < spot.length - 2; i++) {
             spots.push(spot[i][0].place);
             addNextPlace(spot[i][0].place, spot[i + 1][0].place);
           }
-          console.log("Create success");
+
           res.status(200).json({
             message: "Create success",
             data: {

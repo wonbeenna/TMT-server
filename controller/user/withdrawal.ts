@@ -13,8 +13,37 @@ export const withdrawal = async (req: Request, res: Response): Promise<any> => {
   try {
     const userInfo = await verifyAccessToken(req);
 
-    res.send("탈퇴");
+    if (!userInfo) {
+      return res
+        .status(409)
+        .send({ message: "유효하지 않은 access token 입니다." });
+    } else {
+      // user 콜렉션에서 해당 유저의 정보를 찾아 삭제
+      /* 
+      - findOneAndDelete 와 findOneAndRemove의 차이점: 
+      -> findOneAndRemove는 findOneAndModify와 같은 역할을 함
+      -> findIneAndDelete가 더 적합
+      */
+
+      await userModel.findOneAndDelete({
+        email: (<any>userInfo).email,
+      });
+
+      await userDataModel.findOneAndDelete({
+        email: (<any>userInfo).email,
+      });
+      await tourSpotModel.findOneAndDelete({
+        email: (<any>userInfo).email,
+      });
+
+      res.status(200).send({
+        message: "탈퇴가 성공적으로 완료되었습니다.",
+      });
+    }
+
   } catch (err) {
-    res.end();
+    res.send({
+      "error message": err,
+    });
   }
 };

@@ -4,7 +4,7 @@ import cors from "cors";
 import mongoose from "mongoose";
 import bodyParser from "body-parser";
 import MONGO from "../config/config";
-import { userRouter, tripRouter, tokenRouter, googleRouter } from "@router";
+import { userRouter, tripRouter, tokenRouter, authRouter } from "@router";
 
 const port = process.env.PORT;
 
@@ -24,7 +24,7 @@ app.use(
 app.use("/user", userRouter);
 app.use("/trip", tripRouter);
 app.use("/token", tokenRouter);
-app.use("/auth", googleRouter);
+app.use("/auth", authRouter);
 
 app.get("/", (req: Request, res: Response) => {
   res.status(201).send("서버는 서버서버해서 서버야");

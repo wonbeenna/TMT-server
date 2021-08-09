@@ -12,6 +12,7 @@ import { verifyAccessToken } from "@tokenController/index";
 export const withdrawal = async (req: Request, res: Response): Promise<any> => {
   try {
     const userInfo = await verifyAccessToken(req);
+
     if (!userInfo) {
       return res
         .status(409)
@@ -39,6 +40,7 @@ export const withdrawal = async (req: Request, res: Response): Promise<any> => {
         message: "탈퇴가 성공적으로 완료되었습니다.",
       });
     }
+
   } catch (err) {
     res.send({
       "error message": err,

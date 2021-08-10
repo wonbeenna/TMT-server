@@ -9,6 +9,7 @@ import {
 } from "../../controller/token/index";
 const client = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
 import dotenv from "dotenv";
+import userDataModel from "database/userData";
 dotenv.config();
 
 export const googleLogin = async (
@@ -45,13 +46,26 @@ export const googleLogin = async (
           email: payload.email,
           password: creatingPassword,
         });
-        return newUser.save().then((data) => {
-          return res.status(201).send({
-            message: "회원가입이 성공적으로 완료되었습니다!",
-            name: data.name,
+        return newUser.save().then(async (data) => {
+          let userData = new userDataModel({
             email: data.email,
-            password: data.password,
+            place: [],
           });
+          const newFindingUser = await userModel.findOne({ email: data.email });
+          if (newFindingUser) {
+            const accessToken = generateAccessToken(newFindingUser);
+            const refreshToken = generateRefreshToken(newFindingUser);
+            return userData.save().then(() => {
+              return res.status(201).send({
+                message: "회원가입이 성공적으로 완료되었습니다!",
+                name: data.name,
+                email: data.email,
+                password: data.password,
+                accessToken: accessToken,
+                refreshToken: refreshToken,
+              });
+            });
+          }
         });
       }
     } else {

@@ -77,3 +77,77 @@ export const kakaoLogin = async (req: Request, res: Response): Promise<any> => {
     return res.send("카카오 에러");
   }
 };
+
+/* ----------------------------Version 2---------------------------------------------
+
+import { Request, Response } from "express";
+import axios from "axios";
+import userModel from "../../database/user";
+import userDataModel from "../../database/userData";
+import bcryptjs from "bcryptjs";
+import {
+  generateAccessToken,
+  generateRefreshToken,
+} from "../../controller/token/index";
+
+
+1. 클라이언트로부터 엑세스토큰을 넘겨 받는다. (req.body)
+2. 엑세스 토큰으로 카카오에 정보 요청: 유저의 이메일 정보, 이름을 뽑아와 회원가입 시킴 (비번은 이메일과 닉네임 합친 것을 암호화 시킴)
+3. userData 도 함께 생성
+ 
+export const kakaoLogin = async (req: Request, res: Response): Promise<any> => {
+  try {
+    const { kakaoToken } = req.body;
+    let userInfo = await axios
+      .get("https://kapi.kakao.com/v2/user/me", {
+        headers: {
+          Authorization: `Bearer ${kakaoToken}`,
+        },
+      })
+      .then((res) => {
+        return {
+          email: res.data.kakao_account.email,
+          nickname: res.data.kakao_account.profile.nickname,
+        };
+      });
+    
+    const oldUser = await userModel.findOne({
+      email: (<any>userInfo).email,
+    });
+    if (oldUser) {
+      const accessToken = generateAccessToken(oldUser);
+      const refreshToken = generateRefreshToken(oldUser);
+      res.status(200).send({
+        accessToken: accessToken,
+        refreshToken: refreshToken,
+        message: "카카오로그인에 성공하였습니다!",
+      });
+    } else {
+      const password = (<any>userInfo).email + (<any>userInfo).nickname;
+      const creatingPassword = await bcryptjs.hash(password, 10);
+      const newUser = new userModel({
+        email: (<any>userInfo).email,
+        name: (<any>userInfo).nickname,
+        password: password,
+      });
+      return newUser.save().then((kakaoUser) => {
+        let userData = new userDataModel({
+          email: kakaoUser.email,
+          place: [],
+        });
+        return userData.save().then(() => {
+          return res.status(201).send({
+            message: "카카오 로그인이 성공적으로 되었습니다!",
+            name: kakaoUser.name,
+            email: kakaoUser.email,
+          });
+        });
+      });
+    }
+  } catch (err) {
+    return err;
+  }
+};
+
+
+ */

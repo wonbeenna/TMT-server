@@ -39,11 +39,17 @@ export const signIn = async (req: Request, res: Response): Promise<void> => {
       } else {
         const accessToken = generateAccessToken(userInfo);
         const refreshToken = generateRefreshToken(userInfo);
-        res.status(200).send({
-          accessToken: accessToken,
-          refreshToken: refreshToken,
-          message: "로그인에 성공하였습니다!",
-        });
+        userModel
+          .findOne({ name: (<any>userInfo).name, email: (<any>userInfo).email })
+          .then((theUser) => {
+            res.status(200).send({
+              name: (<any>theUser)?.name,
+              email: (<any>theUser)?.email,
+              accessToken: accessToken,
+              refreshToken: refreshToken,
+              message: "로그인에 성공하였습니다!",
+            });
+          });
       }
     }
   } catch (err) {

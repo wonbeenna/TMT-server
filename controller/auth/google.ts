@@ -31,11 +31,20 @@ export const googleLogin = async (
       if (findingUser) {
         const accessToken = generateAccessToken(findingUser);
         const refreshToken = generateRefreshToken(findingUser);
-        res.status(200).send({
-          accessToken: accessToken,
-          refreshToken: refreshToken,
-          message: "로그인이 성공적으로 되었습니다!",
-        });
+        userModel
+          .findOne({
+            name: (<any>findingUser).name,
+            email: (<any>findingUser).email,
+          })
+          .then((theUser) => {
+            res.status(200).send({
+              name: (<any>theUser)?.name,
+              email: (<any>theUser)?.email,
+              accessToken: accessToken,
+              refreshToken: refreshToken,
+              message: "로그인에 성공하였습니다!",
+            });
+          });
       } else {
         const creatingPassword = await bcryptjs.hash(
           payload?.email + process.env.GOOGLE_CLIENT_ID!,

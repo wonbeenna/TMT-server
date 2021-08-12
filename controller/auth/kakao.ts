@@ -36,11 +36,17 @@ export const kakaoLogin = async (req: Request, res: Response): Promise<any> => {
     if (findUser) {
       const accessToken = generateAccessToken(findUser);
       const refreshToken = generateRefreshToken(findUser);
-      return res.status(200).send({
-        accessToken: accessToken,
-        refreshToken: refreshToken,
-        message: "로그인이 성공적으로 되었습니다!",
-      });
+      userModel
+        .findOne({ name: (<any>findUser).name, email: (<any>findUser).email })
+        .then((theUser) => {
+          res.status(200).send({
+            name: (<any>theUser)?.name,
+            email: (<any>theUser)?.email,
+            accessToken: accessToken,
+            refreshToken: refreshToken,
+            message: "로그인에 성공하였습니다!",
+          });
+        });
     } else {
       const creatingPassword = await bcryptjs.hash(
         userData.data.kakao_account.email + process.env.GOOGLE_CLIENT_ID!,

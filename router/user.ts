@@ -11,7 +11,8 @@ import { userInfoPost } from "@userController/userInfo";
 import { userInfoGet } from "@userController/userInfo";
 import { nonUser } from "@userController/nonUser";
 import { withdrawal } from "@userController/withdrawal";
-
+import { checkEmail } from "@userController/checkEmail";
+import { checkPassword } from "@userController/passwordCheck";
 const router = express.Router();
 
 router.post("/like", likePost);
@@ -25,5 +26,7 @@ router.post("/userInfo", userInfoPost);
 router.get("/userInfo", userInfoGet);
 router.get("/nonUser", nonUser);
 router.delete("/withdrawal", withdrawal);
+router.post("/checkEmail", checkEmail);
+router.post("/checkPassword", checkPassword);
 
 export = router;

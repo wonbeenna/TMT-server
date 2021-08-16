@@ -11,7 +11,7 @@ export const listPost = async (req: Request, res: Response): Promise<void> => {
         .find({
           theme: { $all: theme }, //$in과 all의 차이 : in은 theme에 값 중에서 하나라도 존재하면 find. all은 theme에 존재하는 값이 모두있어야 find.
         })
-        .select("-_id place address lat long photo theme");
+        .select("-_id place address lat long photo theme province");
       if (!placeList) {
         res.status(400).json({ message: "request failed!" });
       } else {
@@ -22,7 +22,7 @@ export const listPost = async (req: Request, res: Response): Promise<void> => {
         .find({
           province: province,
         })
-        .select("-_id place address lat long photo theme");
+        .select("-_id place address lat long photo theme province");
       if (!placeList) {
         res.status(400).json({ message: "request failed!" });
       } else {
@@ -34,7 +34,7 @@ export const listPost = async (req: Request, res: Response): Promise<void> => {
           theme: { $all: theme },
           province: province,
         })
-        .select("-_id place address lat long photo theme");
+        .select("-_id place address lat long photo theme province");
       if (!placeList) {
         res.status(400).json({ message: "request failed!" });
       } else {
@@ -63,7 +63,7 @@ export const listGet = async (req: Request, res: Response): Promise<void> => {
       .find({
         place: { $in: topPlaceName },
       })
-      .select("-_id place address lat long photo theme");
+      .select("-_id place address lat long photo theme province");
     if (!placeList) {
       res.status(400).json({ message: "request failed!" });
     } else {

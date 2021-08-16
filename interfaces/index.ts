@@ -6,3 +6,4 @@ export * from "./place";
 export * from "./next_place";
 export * from "./auth";
 export * from "./nonUser";
+export * from "./plan";

@@ -10,6 +10,7 @@ export const nonUser = async (req: Request, res: Response): Promise<void> => {
      */
   try {
     let randomInfo = await new nonUserModel({
+      name: "비회원" + Math.floor(Math.random() * 1000),
       email: Math.random(),
       password: Math.random(),
     });
@@ -22,7 +23,7 @@ export const nonUser = async (req: Request, res: Response): Promise<void> => {
         res.status(200).send({
           message: "비회원로그인에 성공하였습니다!",
           accessToken: accessToken,
-
+          name: newRandom.name,
           email: newRandom.email,
           password: newRandom.password,
         });

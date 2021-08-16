@@ -7,24 +7,36 @@ import { NonUser } from "../../interfaces/nonUser";
 // 로그인 시 엑세스 토큰과 리프레시토큰 부여
 
 export const generateAccessToken = (user: User) => {
-  return sign({ email: user.email }, MONGO.token.accessSecret!, {
-    algorithm: "HS256",
-    expiresIn: "2h",
-  });
+  return sign(
+    { name: user.name, email: user.email },
+    MONGO.token.accessSecret!,
+    {
+      algorithm: "HS256",
+      expiresIn: "2h",
+    }
+  );
 };
 
 export const generateRefreshToken = (user: User) => {
-  return sign({ email: user.email }, MONGO.token.refreshSecret!, {
-    algorithm: "HS256",
-    expiresIn: "14d",
-  });
+  return sign(
+    { name: user.name, email: user.email },
+    MONGO.token.refreshSecret!,
+    {
+      algorithm: "HS256",
+      expiresIn: "14d",
+    }
+  );
 };
 
 export const nonUserAccessToken = (nonUser: NonUser) => {
-  return sign({ email: nonUser.email }, MONGO.token.accessSecret!, {
-    algorithm: "HS256",
-    expiresIn: "1d",
-  });
+  return sign(
+    { name: nonUser.name, email: nonUser.email },
+    MONGO.token.accessSecret!,
+    {
+      algorithm: "HS256",
+      expiresIn: "1d",
+    }
+  );
 };
 
 // 다른 페이지 이동이나 수정 시 엑세스 토큰 유효 여부 확인

@@ -13,7 +13,6 @@ export const myPage = async (req: Request, res: Response): Promise<void> => {
           email: <any>userInfo.email,
         })
         .select("-_id spot startDate endDate");
-
       res.status(200).json(userSpot);
     }
   } catch (err) {

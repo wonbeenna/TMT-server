@@ -1,6 +1,6 @@
 export interface TourSpot {
   email: string;
-  spot: string[];
+  spot: any;
   startDate: string;
   endDate: string;
 }

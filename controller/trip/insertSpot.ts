@@ -29,39 +29,6 @@ export const insertSpot = async (
       tourSpot
         .save()
         .then((newTourSpot) => {
-          const spot = (<any>newTourSpot).spot;
-          let spots = [];
-
-          const addNextPlace = async (
-            spot: string,
-            nextSpot: string
-          ): Promise<void> => {
-            const placeName = await nextPlaceModel.findOne({
-              place_name: spot,
-            });
-            if (!placeName) {
-              interface Next_Place {
-                [nextSpot: string]: Number;
-              }
-              var push: Next_Place = {};
-              push[nextSpot] = 1;
-
-              const newPlaceName = new nextPlaceModel({
-                place_name: spot,
-                next_place: push,
-              });
-
-              newPlaceName.save();
-            }
-
-            await nextPlaceModel.updateOne({});
-          };
-
-          for (let i = 0; i < spot.length - 2; i++) {
-            spots.push(spot[i][0].place);
-            addNextPlace(spot[i][0].place, spot[i + 1][0].place);
-          }
-
           res.status(200).json({
             message: "Create success",
             data: {

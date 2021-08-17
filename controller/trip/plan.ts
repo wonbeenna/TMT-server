@@ -42,3 +42,21 @@ export const planGet = async (req: Request, res: Response): Promise<void> => {
     return err;
   }
 };
+
+export const planDelete = async (
+  req: Request,
+  res: Response
+): Promise<void> => {
+  try {
+    const userInfo = await verifyAccessToken(req);
+    if (!userInfo) {
+      res.status(409).send({ message: "유효하지 않은 정보 입니다." });
+    } else {
+      const { _id } = req.body;
+      await planModel.findOneAndDelete({ _id: _id });
+      res.status(200).send({ message: "삭제 완료" });
+    }
+  } catch (err) {
+    return err;
+  }
+};
